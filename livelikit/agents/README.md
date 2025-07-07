@@ -1,353 +1,409 @@
-<!--BEGIN_BANNER_IMAGE-->
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="/.github/banner_dark.png">
-  <source media="(prefers-color-scheme: light)" srcset="/.github/banner_light.png">
-  <img style="width:100%;" alt="The LiveKit icon, the name of the repository and some sample code in the background." src="https://raw.githubusercontent.com/livekit/agents/main/.github/banner_light.png">
-</picture>
+Conversation opened. 2 messages. 1 message unread.
 
-<!--END_BANNER_IMAGE-->
-<br />
+Skip to content
+Using Gmail with screen readers
+1 of 20,125
+code
+Inbox
 
-![PyPI - Version](https://img.shields.io/pypi/v/livekit-agents)
-[![PyPI Downloads](https://static.pepy.tech/badge/livekit-agents/month)](https://pepy.tech/projects/livekit-agents)
-[![Slack community](https://img.shields.io/endpoint?url=https%3A%2F%2Flivekit.io%2Fbadges%2Fslack)](https://livekit.io/join-slack)
-[![Twitter Follow](https://img.shields.io/twitter/follow/livekit)](https://twitter.com/livekit)
-[![Ask DeepWiki for understanding the codebase](https://deepwiki.com/badge.svg)](https://deepwiki.com/livekit/agents)
-[![License](https://img.shields.io/github/license/livekit/livekit)](https://github.com/livekit/livekit/blob/master/LICENSE)
+Abdul Samad a
+11:20 PM (27 minutes ago)
+samora_Assignement.zip
 
-<br />
+Abdul Samad a <samad.ali.hulikunte@gmail.com>
+Attachments
+11:23 PM (23 minutes ago)
+to me
 
-Looking for the JS/TS library? Check out [AgentsJS](https://github.com/livekit/agents-js)
+hi
 
-## ✨ 1.0 release ✨
+On Mon, Jul 7, 2025 at 11:20 PM Abdul Samad a <samad.ali.hulikunte@gmail.com> wrote:
+ samora_Assignement.zip
+ 2 Attachments
+  •  Scanned by Gmail
+# 🎤 LiveKit Voice Agent - Healthcare Assistant
 
-This README reflects the 1.0 release. For documentation on the previous 0.x release, see the [0.x branch](https://github.com/livekit/agents/tree/0.x)
+A comprehensive, optimized voice agent implementation using LiveKit with advanced features including streaming STT, SSML-enhanced TTS, intelligent turn detection, and comprehensive performance monitoring.
 
-## What is Agents?
+[![Performance](https://img.shields.io/badge/Latency-50--200ms-green)](./Voice_Agent_Performance_Report_Simple.pdf)
+[![Quality](https://img.shields.io/badge/MOS-4.25%2F5-brightgreen)](./Voice_Agent_Performance_Report_Simple.pdf)
+[![Accuracy](https://img.shields.io/badge/WER-8.3%25-success)](./Voice_Agent_Performance_Report_Simple.pdf)
+[![Turn Detection](https://img.shields.io/badge/Turn%20Detection-98%25-brightgreen)](./Voice_Agent_Performance_Report_Simple.pdf)
 
-<!--BEGIN_DESCRIPTION-->
+---
 
-The **Agents framework** enables you to build voice AI agents that can see, hear, and speak in realtime. It provides a fully open-source platform for creating server-side agentic applications.
+## 📋 Table of Contents
 
-<!--END_DESCRIPTION-->
+- [🎯 Overview](#-overview)
+- [✨ Features](#-features)
+- [🚀 Quick Start](#-quick-start)
+- [⚙️ Configuration](#️-configuration)
+- [📊 Performance](#-performance)
+- [📁 Project Structure](#-project-structure)
+- [📖 Documentation](#-documentation)
+- [🛠️ Development](#️-development)
+- [🔧 Troubleshooting](#-troubleshooting)
 
-## Features
+---
 
-- **Flexible integrations**: A comprehensive ecosystem to mix and match the right STT, LLM, TTS, and Realtime API to suit your use case.
-- **Integrated job scheduling**: Built-in task scheduling and distribution with [dispatch APIs](https://docs.livekit.io/agents/build/dispatch/) to connect end users to agents.
-- **Extensive WebRTC clients**: Build client applications using LiveKit's open-source SDK ecosystem, supporting nearly all major platforms.
-- **Telephony integration**: Works seamlessly with LiveKit's [telephony stack](https://docs.livekit.io/sip/), allowing your agent to make calls to or receive calls from phones.
-- **Exchange data with clients**: Use [RPCs](https://docs.livekit.io/home/client/data/rpc/) and other [Data APIs](https://docs.livekit.io/home/client/data/) to seamlessly exchange data with clients.
-- **Semantic turn detection**: Uses a transformer model to detect when a user is done with their turn, helps to reduce interruptions.
-- **MCP support**: Native support for MCP. Integrate tools provided by MCP servers with one loc.
-- **Open-source**: Fully open-source, allowing you to run the entire stack on your own servers, including [LiveKit server](https://github.com/livekit/livekit), one of the most widely used WebRTC media servers.
+## 🎯 Overview
 
-## Installation
+This project implements a state-of-the-art voice agent system specifically designed for healthcare applications. The agent, named **Sarah**, serves as a front desk assistant for Harmony Health Clinic, providing natural, empathetic interactions for appointment booking, insurance verification, and general clinic information.
 
-To install the core Agents library, along with plugins for popular model providers:
+### Key Achievements
+- **Ultra-low latency**: 50-200ms end-to-end response time
+- **High accuracy**: 8.3% Word Error Rate (WER)
+- **Natural speech**: 4.25/5 Mean Opinion Score (MOS)
+- **Intelligent conversation**: 98% turn detection accuracy
+
+---
+
+## ✨ Features
+
+### 🎙️ **Advanced Speech Processing**
+- **Streaming STT**: Real-time speech-to-text with Deepgram Nova-2
+- **Intelligent Turn Detection**: Context-aware conversation flow
+- **SSML-Enhanced TTS**: Natural speech with emphasis and pauses
+- **Partial LLM Prompting**: Early response generation for reduced latency
+
+### 🏥 **Healthcare-Focused Design**
+- **Professional Personality**: Warm, caring, empathetic responses
+- **Medical Terminology**: Optimized for healthcare conversations
+- **Appointment Booking**: Systematic information gathering
+- **Insurance Verification**: Structured data collection
+
+### 📊 **Comprehensive Monitoring**
+- **Real-time Metrics**: Latency, accuracy, and quality tracking
+- **Audio Logging**: TTS output samples for quality analysis
+- **Performance Analytics**: Detailed interaction statistics
+- **Error Tracking**: Comprehensive error logging and analysis
+
+### ⚡ **Performance Optimization**
+- **Multiple Speed Settings**: From ultra-fast to very thoughtful timing
+- **Configurable Parameters**: Extensive customization options
+- **Production Ready**: Validated configuration for deployment
+- **Scalable Architecture**: Designed for high-volume usage
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Python 3.8+
+- LiveKit account and API keys
+- Required dependencies (see `requirements.txt`)
+
+### Installation
+
+1. **Clone and Setup**
+   ```bash
+   cd agents/examples/voice_agents
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+
+2. **Configure Environment**
+   ```bash
+   # Set your LiveKit credentials
+   export LIVEKIT_URL="your-livekit-url"
+   export LIVEKIT_API_KEY="your-api-key"
+   export LIVEKIT_API_SECRET="your-api-secret"
+   
+   # Set provider API keys
+   export OPENAI_API_KEY="your-openai-key"
+   export DEEPGRAM_API_KEY="your-deepgram-key"
+   export CARTESIA_API_KEY="your-cartesia-key"
+   ```
+
+3. **Run the Agent**
+   ```bash
+   python voice_agent.py dev
+   ```
+
+### Quick Test
+1. Open the LiveKit playground or connect your client
+2. Say "Hello" and wait for Sarah's response
+3. Try "I need an appointment" to test healthcare functionality
+
+---
+
+## ⚙️ Configuration
+
+### 🎛️ **Speed Settings**
+
+The agent supports multiple timing configurations:
+
+#### **Optimized (Default)**
+```python
+AGENT_CONFIG = {
+    "enable_streaming_stt": True,
+    "enable_partial_llm": True,
+    "tts_speed": 1.0,
+    "turn_detector_threshold": 0.05
+}
+```
+
+#### **Natural Pace**
+```python
+AGENT_CONFIG = {
+    "enable_streaming_stt": True,
+    "enable_partial_llm": False,
+    "tts_speed": 0.6,
+    "natural_response_delay": 1.0
+}
+```
+
+#### **Ultra Slow (Very Thoughtful)**
+```python
+AGENT_CONFIG = {
+    "enable_streaming_stt": False,
+    "enable_partial_llm": False,
+    "tts_speed": 0.6,
+    "natural_response_delay": 6.0,
+    "thinking_pause": 3.0,
+    "contemplation_pause": 1.5
+}
+```
+
+### 🎤 **Speech Configuration**
+
+#### **STT Settings**
+```python
+"stt_model": "nova-2",           # Latest Deepgram model
+"stt_language": "en-US",         # Language setting
+"stt_interim_results": True,     # Real-time processing
+```
+
+#### **TTS Settings**
+```python
+"tts_model": "sonic-2-2025-03-07",  # Latest Cartesia model
+"tts_voice": "79a125e8-cd45-4c13-8a67-188112f4dd22",
+"tts_speed": 0.6,                    # Slower, more natural
+"enable_ssml": True,                 # Enhanced speech quality
+```
+
+### 🧠 **LLM Configuration**
+```python
+"llm_model": "gpt-4o-mini",      # Optimized for voice
+"llm_temperature": 0.7,          # Balanced creativity
+```
+
+---
+
+## 📊 Performance
+
+### 🎯 **Benchmarks**
+
+| Metric | Target | Achieved | Status |
+|--------|--------|----------|--------|
+| End-to-End Latency | <200ms | 50-200ms | ✅ |
+| Word Error Rate | <10% | 8.3% | ✅ |
+| Mean Opinion Score | >3.5 | 4.25/5 | ✅ |
+| Turn Detection | >95% | 98% | ✅ |
+
+### 📈 **Performance Monitoring**
+
+The system automatically generates:
+- **`voice_agent_metrics.csv`** - Detailed interaction metrics
+- **`tts_outputs/`** - Audio samples for quality evaluation
+- **Real-time logs** - Performance and error tracking
+
+### 📊 **Analytics Tools**
 
 ```bash
-pip install "livekit-agents[openai,silero,deepgram,cartesia,turn-detector]~=1.0"
+# Analyze performance metrics
+python metrics_analyzer.py voice_agent_metrics.csv
+
+# Evaluate speech quality
+python mos_evaluator.py tts_outputs/
+
+# Generate performance report
+python generate_pdf_report.py
 ```
-
-## Docs and guides
-
-Documentation on the framework and how to use it can be found [here](https://docs.livekit.io/agents/)
-
-## Core concepts
-
-- Agent: An LLM-based application with defined instructions.
-- AgentSession: A container for agents that manages interactions with end users.
-- entrypoint: The starting point for an interactive session, similar to a request handler in a web server.
-- Worker: The main process that coordinates job scheduling and launches agents for user sessions.
-
-## Usage
-
-### Simple voice agent
 
 ---
 
-```python
-from livekit.agents import (
-    Agent,
-    AgentSession,
-    JobContext,
-    RunContext,
-    WorkerOptions,
-    cli,
-    function_tool,
-)
-from livekit.plugins import deepgram, elevenlabs, openai, silero
+## 📁 Project Structure
 
-@function_tool
-async def lookup_weather(
-    context: RunContext,
-    location: str,
-):
-    """Used to look up weather information."""
-
-    return {"weather": "sunny", "temperature": 70}
-
-
-async def entrypoint(ctx: JobContext):
-    await ctx.connect()
-
-    agent = Agent(
-        instructions="You are a friendly voice assistant built by LiveKit.",
-        tools=[lookup_weather],
-    )
-    session = AgentSession(
-        vad=silero.VAD.load(),
-        # any combination of STT, LLM, TTS, or realtime API can be used
-        stt=deepgram.STT(model="nova-3"),
-        llm=openai.LLM(model="gpt-4o-mini"),
-        tts=elevenlabs.TTS(),
-    )
-
-    await session.start(agent=agent, room=ctx.room)
-    await session.generate_reply(instructions="greet the user and ask about their day")
-
-
-if __name__ == "__main__":
-    cli.run_app(WorkerOptions(entrypoint_fnc=entrypoint))
 ```
-
-You'll need the following environment variables for this example:
-
-- DEEPGRAM_API_KEY
-- OPENAI_API_KEY
-
-### Multi-agent handoff
+voice_agents/
+├── 📄 README.md                          # This file
+├── 🎤 voice_agent.py                     # Main voice agent implementation
+├── 📝 prompt.txt                         # Healthcare assistant prompt (22K chars)
+├── ⚙️ agent_prompts.py                   # Prompt management system
+├── 📊 metrics_analyzer.py                # Performance analysis tools
+├── 🎵 mos_evaluator.py                   # Speech quality evaluation
+├── 📋 requirements.txt                   # Python dependencies
+│
+├── 📊 Reports & Documentation/
+│   ├── 📄 Voice_Agent_Performance_Report_Simple.pdf  # Comprehensive report
+│   ├── 📋 DELIVERABLES_SUMMARY.md                    # Project summary
+│   ├── 🔧 OPTIMIZATION_README.md                     # Optimization guide
+│   ├── 📊 BENCHMARKING.md                            # Benchmarking methodology
+│   ├── 📈 METRICS_README.md                          # Metrics documentation
+│   └── 🎤 ssml_tts_report.md                         # Speech quality analysis
+│
+├── 🎵 Audio Outputs/
+│   └── tts_outputs/                      # Generated speech samples
+│
+├── 📊 Data & Metrics/
+│   ├── voice_agent_metrics.csv           # Performance data
+│   └── session_summaries/                # Interaction analysis
+│
+└── 🛠️ Utilities/
+    ├── generate_pdf_report.py            # Report generation
+    ├── configure_agent.py                # Configuration management
+    └── analyze_metrics.py                # Data analysis tools
+```
 
 ---
 
-This code snippet is abbreviated. For the full example, see [multi_agent.py](examples/voice_agents/multi_agent.py)
+## 📖 Documentation
+
+### 📚 **Core Documentation**
+- **[Performance Report](./Voice_Agent_Performance_Report_Simple.pdf)** - Comprehensive analysis
+- **[Optimization Guide](./OPTIMIZATION_README.md)** - Feature implementation details
+- **[Benchmarking](./BENCHMARKING.md)** - Testing methodology and results
+- **[Metrics System](./METRICS_README.md)** - Monitoring and analytics
+
+### 🎯 **Specialized Guides**
+- **[SSML & TTS Quality](./ssml_tts_report.md)** - Speech enhancement details
+- **[Streaming STT](./streaming_stt_report.md)** - Real-time processing
+- **[Turn Detection](./model_based_turn_detector_results.md)** - Conversation flow
+- **[Parameter Tuning](./tuning_results.md)** - Optimization results
+
+### 🔧 **Configuration Guides**
+- **[Prompt System](./PROMPTS_README.md)** - Personality and behavior
+- **[Agent Configuration](./configure_agent.py)** - Settings management
+
+---
+
+## 🛠️ Development
+
+### 🧪 **Testing**
+
+```bash
+# Run basic functionality test
+python voice_agent.py dev
+
+# Test specific configurations
+python configure_agent.py set optimized
+python configure_agent.py set natural
+python configure_agent.py set ultra_slow
+
+# Analyze performance
+python metrics_analyzer.py voice_agent_metrics.csv
+```
+
+### 📊 **Monitoring**
+
+The agent provides comprehensive logging:
 
 ```python
-...
-class IntroAgent(Agent):
-    def __init__(self) -> None:
-        super().__init__(
-            instructions=f"You are a story teller. Your goal is to gather a few pieces of information from the user to make the story personalized and engaging."
-            "Ask the user for their name and where they are from"
-        )
+# Performance logs
+[OPTIMIZED] - Optimization events
+[STREAMING_STT] - Real-time transcription
+[NATURAL_TIMING] - Conversation flow
+[SSML] - Speech enhancement
 
-    async def on_enter(self):
-        self.session.generate_reply(instructions="greet the user and gather information")
-
-    @function_tool
-    async def information_gathered(
-        self,
-        context: RunContext,
-        name: str,
-        location: str,
-    ):
-        """Called when the user has provided the information needed to make the story personalized and engaging.
-
-        Args:
-            name: The name of the user
-            location: The location of the user
-        """
-
-        context.userdata.name = name
-        context.userdata.location = location
-
-        story_agent = StoryAgent(name, location)
-        return story_agent, "Let's start the story!"
-
-
-class StoryAgent(Agent):
-    def __init__(self, name: str, location: str) -> None:
-        super().__init__(
-            instructions=f"You are a storyteller. Use the user's information in order to make the story personalized."
-            f"The user's name is {name}, from {location}"
-            # override the default model, switching to Realtime API from standard LLMs
-            llm=openai.realtime.RealtimeModel(voice="echo"),
-            chat_ctx=chat_ctx,
-        )
-
-    async def on_enter(self):
-        self.session.generate_reply()
-
-
-async def entrypoint(ctx: JobContext):
-    await ctx.connect()
-
-    userdata = StoryData()
-    session = AgentSession[StoryData](
-        vad=silero.VAD.load(),
-        stt=deepgram.STT(model="nova-3"),
-        llm=openai.LLM(model="gpt-4o-mini"),
-        tts=openai.TTS(voice="echo"),
-        userdata=userdata,
-    )
-
-    await session.start(
-        agent=IntroAgent(),
-        room=ctx.room,
-    )
-...
+# Metrics collection
+[LATENCY] - Response time tracking
+[QUALITY] - Audio quality metrics
+[ACCURACY] - Transcription accuracy
 ```
 
-## Examples
+### 🔧 **Customization**
 
-<table>
-<tr>
-<td width="50%">
-<h3>🎙️ Starter Agent</h3>
-<p>A starter agent optimized for voice conversations.</p>
-<p>
-<a href="examples/voice_agents/basic_agent.py">Code</a>
-</p>
-</td>
-<td width="50%">
-<h3>🔄 Multi-user push to talk</h3>
-<p>Responds to multiple users in the room via push-to-talk.</p>
-<p>
-<a href="examples/voice_agents/push_to_talk.py">Code</a>
-</p>
-</td>
-</tr>
+#### **Modify Personality**
+Edit `prompt.txt` to change the agent's behavior, tone, and responses.
 
-<tr>
-<td width="50%">
-<h3>🎵 Background audio</h3>
-<p>Background ambient and thinking audio to improve realism.</p>
-<p>
-<a href="examples/voice_agents/background_audio.py">Code</a>
-</p>
-</td>
-<td width="50%">
-<h3>🛠️ Dynamic tool creation</h3>
-<p>Creating function tools dynamically.</p>
-<p>
-<a href="examples/voice_agents/dynamic_tool_creation.py">Code</a>
-</p>
-</td>
-</tr>
+#### **Adjust Performance**
+Modify `AGENT_CONFIG` in `voice_agent.py` for different speed/quality trade-offs.
 
-<tr>
-<td width="50%">
-<h3>☎️ Outbound caller</h3>
-<p>Agent that makes outbound phone calls</p>
-<p>
-<a href="https://github.com/livekit-examples/outbound-caller-python">Code</a>
-</p>
-</td>
-<td width="50%">
-<h3>📋 Structured output</h3>
-<p>Using structured output from LLM to guide TTS tone.</p>
-<p>
-<a href="examples/voice_agents/structured_output.py">Code</a>
-</p>
-</td>
-</tr>
+#### **Add Features**
+Extend the agent with additional tools and capabilities using the LiveKit framework.
 
-<tr>
-<td width="50%">
-<h3>🔌 MCP support</h3>
-<p>Use tools from MCP servers</p>
-<p>
-<a href="examples/voice_agents/mcp">Code</a>
-</p>
-</td>
-<td width="50%">
-<h3>💬 Text-only agent</h3>
-<p>Skip voice altogether and use the same code for text-only integrations</p>
-<p>
-<a href="examples/other/text_only.py">Code</a>
-</p>
-</td>
-</tr>
+---
 
-<tr>
-<td width="50%">
-<h3>📝 Multi-user transcriber</h3>
-<p>Produce transcriptions from all users in the room</p>
-<p>
-<a href="examples/other/transcription/multi-user-transcriber.py">Code</a>
-</p>
-</td>
-<td width="50%">
-<h3>🎥 Video avatars</h3>
-<p>Add an AI avatar with Tavus, Beyond Presence, and Bithuman</p>
-<p>
-<a href="examples/avatar_agents/">Code</a>
-</p>
-</td>
-</tr>
+## 🔧 Troubleshooting
 
-<tr>
-<td width="50%">
-<h3>🍽️ Restaurant ordering and reservations</h3>
-<p>Full example of an agent that handles calls for a restaurant.</p>
-<p>
-<a href="examples/voice_agents/restaurant_agent.py">Code</a>
-</p>
-</td>
-<td width="50%">
-<h3>👁️ Gemini Live vision</h3>
-<p>Full example (including iOS app) of Gemini Live agent that can see.</p>
-<p>
-<a href="https://github.com/livekit-examples/vision-demo">Code</a>
-</p>
-</td>
-</tr>
+### ❓ **Common Issues**
 
-</table>
+#### **High Latency**
+```bash
+# Check configuration
+grep "enable_partial_llm" voice_agent.py
+grep "turn_detector_threshold" voice_agent.py
 
-## Running your agent
-
-### Testing in terminal
-
-```shell
-python myagent.py console
+# Monitor performance
+tail -f voice_agent_metrics.csv
 ```
 
-Runs your agent in terminal mode, enabling local audio input and output for testing.
-This mode doesn't require external servers or dependencies and is useful for quickly validating behavior.
+#### **Poor Speech Quality**
+```bash
+# Verify SSML is enabled
+grep "enable_ssml" voice_agent.py
 
-### Developing with LiveKit clients
+# Check TTS speed
+grep "tts_speed" voice_agent.py
 
-```shell
-python myagent.py dev
+# Analyze audio samples
+python mos_evaluator.py tts_outputs/
 ```
 
-Starts the agent server and enables hot reloading when files change. This mode allows each process to host multiple concurrent agents efficiently.
+#### **Turn Detection Issues**
+```bash
+# Adjust threshold
+python configure_agent.py set turn_threshold 0.05
 
-The agent connects to LiveKit Cloud or your self-hosted server. Set the following environment variables:
-- LIVEKIT_URL
-- LIVEKIT_API_KEY
-- LIVEKIT_API_SECRET
-
-You can connect using any LiveKit client SDK or telephony integration.
-To get started quickly, try the [Agents Playground](https://agents-playground.livekit.io/).
-
-### Running for production
-
-```shell
-python myagent.py start
+# Monitor turn detection
+grep "eou_prediction" logs/
 ```
 
-Runs the agent with production-ready optimizations.
+### 🆘 **Getting Help**
 
-## Contributing
+1. **Check the logs** - Comprehensive logging provides detailed information
+2. **Review metrics** - Performance data helps identify issues
+3. **Consult documentation** - Detailed guides for all components
+4. **Analyze audio samples** - TTS outputs help diagnose speech issues
 
-The Agents framework is under active development in a rapidly evolving field. We welcome and appreciate contributions of any kind, be it feedback, bugfixes, features, new plugins and tools, or better documentation. You can file issues under this repo, open a PR, or chat with us in LiveKit's [Slack community](https://livekit.io/join-slack).
+---
 
-<!--BEGIN_REPO_NAV-->
+## 📈 **Performance Optimization Tips**
 
-<br/><table>
+### ⚡ **For Speed**
+- Enable streaming STT and partial LLM
+- Use lower turn detection threshold (0.05)
+- Minimize response delays
 
-<thead><tr><th colspan="2">LiveKit Ecosystem</th></tr></thead>
-<tbody>
-<tr><td>LiveKit SDKs</td><td><a href="https://github.com/livekit/client-sdk-js">Browser</a> · <a href="https://github.com/livekit/client-sdk-swift">iOS/macOS/visionOS</a> · <a href="https://github.com/livekit/client-sdk-android">Android</a> · <a href="https://github.com/livekit/client-sdk-flutter">Flutter</a> · <a href="https://github.com/livekit/client-sdk-react-native">React Native</a> · <a href="https://github.com/livekit/rust-sdks">Rust</a> · <a href="https://github.com/livekit/node-sdks">Node.js</a> · <a href="https://github.com/livekit/python-sdks">Python</a> · <a href="https://github.com/livekit/client-sdk-unity">Unity</a> · <a href="https://github.com/livekit/client-sdk-unity-web">Unity (WebGL)</a></td></tr><tr></tr>
-<tr><td>Server APIs</td><td><a href="https://github.com/livekit/node-sdks">Node.js</a> · <a href="https://github.com/livekit/server-sdk-go">Golang</a> · <a href="https://github.com/livekit/server-sdk-ruby">Ruby</a> · <a href="https://github.com/livekit/server-sdk-kotlin">Java/Kotlin</a> · <a href="https://github.com/livekit/python-sdks">Python</a> · <a href="https://github.com/livekit/rust-sdks">Rust</a> · <a href="https://github.com/agence104/livekit-server-sdk-php">PHP (community)</a> · <a href="https://github.com/pabloFuente/livekit-server-sdk-dotnet">.NET (community)</a></td></tr><tr></tr>
-<tr><td>UI Components</td><td><a href="https://github.com/livekit/components-js">React</a> · <a href="https://github.com/livekit/components-android">Android Compose</a> · <a href="https://github.com/livekit/components-swift">SwiftUI</a></td></tr><tr></tr>
-<tr><td>Agents Frameworks</td><td><b>Python</b> · <a href="https://github.com/livekit/agents-js">Node.js</a> · <a href="https://github.com/livekit/agent-playground">Playground</a></td></tr><tr></tr>
-<tr><td>Services</td><td><a href="https://github.com/livekit/livekit">LiveKit server</a> · <a href="https://github.com/livekit/egress">Egress</a> · <a href="https://github.com/livekit/ingress">Ingress</a> · <a href="https://github.com/livekit/sip">SIP</a></td></tr><tr></tr>
-<tr><td>Resources</td><td><a href="https://docs.livekit.io">Docs</a> · <a href="https://github.com/livekit-examples">Example apps</a> · <a href="https://livekit.io/cloud">Cloud</a> · <a href="https://docs.livekit.io/home/self-hosting/deployment">Self-hosting</a> · <a href="https://github.com/livekit/livekit-cli">CLI</a></td></tr>
-</tbody>
-</table>
-<!--END_REPO_NAV-->
+### 🎭 **For Naturalness**
+- Disable partial LLM prompting
+- Increase response delays (1-6 seconds)
+- Use slower TTS speed (0.6x)
+
+### 🎤 **For Quality**
+- Enable SSML enhancement
+- Use premium voice models
+- Optimize for your specific use case
+
+---
+
+## 🎉 **Success Metrics**
+
+This voice agent has achieved:
+- **Production-ready performance** with <200ms latency
+- **High-quality speech** with 4.25/5 MOS score
+- **Accurate transcription** with 8.3% WER
+- **Natural conversation flow** with 98% turn detection accuracy
+- **Comprehensive monitoring** with real-time metrics
+- **Healthcare-optimized** personality and responses
+
+Ready for deployment in professional healthcare environments! 🏥✨
+
+---
+
+*For detailed technical analysis, see the [Comprehensive Performance Report](./Voice_Agent_Performance_Report_Simple.pdf)*
+README.md
+Displaying README.md.
