@@ -34,217 +34,322 @@ logger.setLevel(logging.INFO)
 
 load_dotenv()
 
-# Optimized Configuration for the voice agent
-AGENT_CONFIG = {
-    # LLM Configuration
-    "llm_model": "gpt-4o-mini",
-    "llm_temperature": 0.7,
-    "llm_max_tokens": 150,  # Shorter responses for voice
+# Voice Agent Optimization Configuration
+# This configuration supports multiple optimization modes for benchmarking
+OPTIMIZATION_MODES = {
+    "baseline": {
+        # Basic configuration without optimizations
+        "name": "Baseline (No Optimizations)",
+        "description": "Basic VAD + non-streaming STT + simple LLM + basic TTS",
 
-    # STT Configuration (Optimized Deepgram)
-    "stt_model": "nova-2",  # Latest model
-    "stt_language": "en-US",
-    "stt_interim_results": True,  # Enable streaming
-    "stt_smart_format": True,
-    "stt_punctuate": True,
-    "stt_diarize": False,
+        # LLM Configuration
+        "llm_model": "gpt-4o-mini",
+        "llm_temperature": 0.7,
+        "llm_max_tokens": 150,
 
-    # TTS Configuration (Slow Speaking Speed)
-    "tts_model": "sonic-2-2025-03-07",  # Updated model for speed/emotion controls
-    "tts_sample_rate": 24000,
-    "tts_encoding": "pcm_s16le",
-    "tts_voice": "79a125e8-cd45-4c13-8a67-188112f4dd22",  # Optimized voice
-    "tts_speed": 0.6,  # Much slower speaking speed (was 1.0)
-    "tts_emotion": "neutral",
+        # STT Configuration (Basic Deepgram)
+        "stt_model": "nova-2",
+        "stt_language": "en-US",
+        "stt_interim_results": False,  # No streaming for baseline
+        "stt_smart_format": True,
+        "stt_punctuate": True,
 
-    # Turn Detection Configuration (Ultra Slow, Very Human-Like Timing)
-    "turn_detector_threshold": 0.0001,  # Ultra insensitive - almost never interrupts
-    "turn_detector_silence_duration": 6.0,  # Ultra long silence for very human-like conversation
-    "turn_detector_prefix_padding": 3.0,
-    "turn_detector_suffix_padding": 3.0,
+        # TTS Configuration (Basic Cartesia)
+        "tts_model": "sonic-2",
+        "tts_sample_rate": 24000,
+        "tts_encoding": "pcm_s16le",
+        "tts_voice": "79a125e8-cd45-4c13-8a67-188112f4dd22",
+        "tts_speed": 1.0,  # Normal speed
 
-    # Performance Optimization (Completely Disabled for Ultra Human-Like Feel)
-    "enable_partial_llm": False,  # Completely disabled
-    "enable_ssml": False,  # Disabled to reduce processing speed
-    "enable_streaming_stt": False,  # Completely disabled
-    "response_timeout": 30.0,  # Ultra long max response time
-    "natural_response_delay": 6.0,  # Ultra long initial delay (was 4.0s)
-    "thinking_pause": 3.0,  # Longer thinking pause (was 2.0s)
-    "tts_processing_delay": 4.0,  # Ultra long delay before TTS starts (was 3.0s)
-    "llm_processing_delay": 3.0,  # Longer LLM processing delay (was 2.0s)
-    "final_pause": 2.0,  # Longer final pause before speaking (was 1.0s)
-    "contemplation_pause": 1.5,  # Additional contemplation pause
+        # Turn Detection (Basic VAD)
+        "turn_detection_mode": "vad",  # vad, stt, or multilingual_model
+        "min_endpointing_delay": 0.5,
+        "max_endpointing_delay": 6.0,
+        "allow_interruptions": True,
+
+        # Optimization Flags
+        "enable_streaming_stt": False,
+        "enable_partial_llm": False,
+        "enable_ssml": False,
+        "enable_turn_detector_plugin": False,
+
+        # Timing (No artificial delays)
+        "natural_response_delay": 0.0,
+        "thinking_pause": 0.0,
+        "tts_processing_delay": 0.0,
+        "llm_processing_delay": 0.0,
+        "final_pause": 0.0,
+    },
+
+    "optimized": {
+        # Fully optimized configuration
+        "name": "Optimized (All Features)",
+        "description": "Streaming STT + partial LLM + turn detector + SSML TTS",
+
+        # LLM Configuration
+        "llm_model": "gpt-4o-mini",
+        "llm_temperature": 0.7,
+        "llm_max_tokens": 150,
+
+        # STT Configuration (Optimized Deepgram)
+        "stt_model": "nova-2",
+        "stt_language": "en-US",
+        "stt_interim_results": True,  # Enable streaming
+        "stt_smart_format": True,
+        "stt_punctuate": True,
+
+        # TTS Configuration (Enhanced Cartesia)
+        "tts_model": "sonic-2",
+        "tts_sample_rate": 24000,
+        "tts_encoding": "pcm_s16le",
+        "tts_voice": "79a125e8-cd45-4c13-8a67-188112f4dd22",
+        "tts_speed": 1.0,
+
+        # Turn Detection (Advanced)
+        "turn_detection_mode": "multilingual_model",
+        "min_endpointing_delay": 0.2,  # Faster response
+        "max_endpointing_delay": 3.0,  # Shorter max wait
+        "allow_interruptions": True,
+
+        # Optimization Flags
+        "enable_streaming_stt": True,
+        "enable_partial_llm": True,
+        "enable_ssml": True,
+        "enable_turn_detector_plugin": True,
+
+        # Timing (Minimal delays for speed)
+        "natural_response_delay": 0.0,
+        "thinking_pause": 0.0,
+        "tts_processing_delay": 0.0,
+        "llm_processing_delay": 0.0,
+        "final_pause": 0.0,
+    },
+
+    "human_like": {
+        # Current ultra-slow, human-like configuration
+        "name": "Human-Like (Slow & Natural)",
+        "description": "Ultra-slow timing for natural conversation feel",
+
+        # LLM Configuration
+        "llm_model": "gpt-4o-mini",
+        "llm_temperature": 0.7,
+        "llm_max_tokens": 150,
+
+        # STT Configuration
+        "stt_model": "nova-2",
+        "stt_language": "en-US",
+        "stt_interim_results": False,  # Disabled for natural timing
+        "stt_smart_format": True,
+        "stt_punctuate": True,
+
+        # TTS Configuration (Slow Speaking)
+        "tts_model": "sonic-2",
+        "tts_sample_rate": 24000,
+        "tts_encoding": "pcm_s16le",
+        "tts_voice": "79a125e8-cd45-4c13-8a67-188112f4dd22",
+        "tts_speed": 0.6,  # Slow speech
+
+        # Turn Detection (Very patient)
+        "turn_detection_mode": "multilingual_model",
+        "min_endpointing_delay": 2.0,  # Very patient
+        "max_endpointing_delay": 6.0,
+        "allow_interruptions": True,
+
+        # Optimization Flags (Mostly disabled for natural feel)
+        "enable_streaming_stt": False,
+        "enable_partial_llm": False,
+        "enable_ssml": False,
+        "enable_turn_detector_plugin": True,
+
+        # Timing (Ultra-slow for human-like feel)
+        "natural_response_delay": 6.0,
+        "thinking_pause": 3.0,
+        "tts_processing_delay": 4.0,
+        "llm_processing_delay": 3.0,
+        "final_pause": 2.0,
+        "contemplation_pause": 1.5,
+    }
 }
+
+# Current active configuration - can be changed for testing
+CURRENT_MODE = "baseline"  # Change to "optimized" or "human_like" for testing
+AGENT_CONFIG = OPTIMIZATION_MODES[CURRENT_MODE]
 
 def prewarm(proc: JobProcess):
     proc.userdata["vad"] = silero.VAD.load()
 
 
-async def entrypoint(ctx: JobContext):
-    ctx.log_context_fields = {"room": ctx.room.name}
+class VoiceOptimizationAgent(Agent):
+    """
+    Voice Agent with configurable optimization modes for benchmarking.
+    Supports baseline, optimized, and human-like configurations.
+    """
 
-    class MyAgent(Agent):
-        def __init__(self) -> None:
-            logger.info(f"[CONFIG] MyAgent.__init__ called - loading prompt from prompt.txt")
+    def __init__(self, config_mode: str = "baseline") -> None:
+        # Set the configuration for this agent instance
+        self.config = OPTIMIZATION_MODES[config_mode]
+        self.config_mode = config_mode
 
-            # Load instructions from prompt.txt file
-            try:
-                prompt_file_path = os.path.join(os.path.dirname(__file__), "prompt.txt")
-                with open(prompt_file_path, 'r', encoding='utf-8') as f:
-                    instructions = f.read().strip()
-                logger.info(f"[CONFIG] Successfully loaded prompt from prompt.txt")
-                logger.info(f"[CONFIG] Prompt length: {len(instructions)} characters")
-                logger.info(f"[CONFIG] Prompt preview: {instructions[:150]}...")
-            except FileNotFoundError:
-                logger.error(f"[CONFIG] prompt.txt file not found at {prompt_file_path}")
-                instructions = "You are Sarah, a helpful AI voice assistant for Harmony Health Clinic."
-                logger.info(f"[CONFIG] Using fallback instructions")
-            except Exception as e:
-                logger.error(f"[CONFIG] Error loading prompt.txt: {e}")
-                instructions = "You are Sarah, a helpful AI voice assistant for Harmony Health Clinic."
-                logger.info(f"[CONFIG] Using fallback instructions")
+        logger.info(f"[CONFIG] VoiceOptimizationAgent.__init__ called with mode: {config_mode}")
+        logger.info(f"[CONFIG] Mode description: {self.config['description']}")
 
-            super().__init__(
-                # Optimized LLM configuration
-                llm=openai.LLM(
-                    model=AGENT_CONFIG["llm_model"],
-                    temperature=AGENT_CONFIG["llm_temperature"],
-                    # Note: max_tokens is handled in the chat context, not LLM constructor
-                ),
-                instructions=instructions,
-                # Slow TTS configuration (will be overridden by session)
-                tts=cartesia.TTS(
-                    model=AGENT_CONFIG["tts_model"],
-                    voice=AGENT_CONFIG["tts_voice"],
-                    encoding=AGENT_CONFIG["tts_encoding"],
-                    sample_rate=AGENT_CONFIG["tts_sample_rate"],
-                    speed=AGENT_CONFIG["tts_speed"],  # 0.6 for slow speech
-                )
+        # Load instructions from prompt.txt file
+        try:
+            prompt_file_path = os.path.join(os.path.dirname(__file__), "prompt.txt")
+            with open(prompt_file_path, 'r', encoding='utf-8') as f:
+                instructions = f.read().strip()
+            logger.info(f"[CONFIG] Successfully loaded prompt from prompt.txt")
+            logger.info(f"[CONFIG] Prompt length: {len(instructions)} characters")
+        except FileNotFoundError:
+            logger.error(f"[CONFIG] prompt.txt file not found")
+            instructions = "You are Sarah, a helpful AI voice assistant for Harmony Health Clinic."
+            logger.info(f"[CONFIG] Using fallback instructions")
+        except Exception as e:
+            logger.error(f"[CONFIG] Error loading prompt.txt: {e}")
+            instructions = "You are Sarah, a helpful AI voice assistant for Harmony Health Clinic."
+            logger.info(f"[CONFIG] Using fallback instructions")
+
+        super().__init__(
+            # LLM configuration
+            llm=openai.LLM(
+                model=self.config["llm_model"],
+                temperature=self.config["llm_temperature"],
+            ),
+            instructions=instructions,
+            # TTS configuration (will be overridden by session)
+            tts=cartesia.TTS(
+                model=self.config["tts_model"],
+                voice=self.config["tts_voice"],
+                encoding=self.config["tts_encoding"],
+                sample_rate=self.config["tts_sample_rate"],
+                speed=self.config["tts_speed"],
+            )
+        )
+
+        # Initialize comprehensive metrics logging
+        self.metrics_file_path = os.path.join(os.path.dirname(__file__), f"voice_agent_metrics_{config_mode}.csv")
+        self.csv_fieldnames = [
+            "session_id", "timestamp", "interaction_id", "config_mode",
+            # Transcript metrics
+            "user_transcript", "transcript_confidence", "transcript_duration_ms",
+            # Agent response metrics
+            "agent_response", "response_length_chars", "response_length_words",
+            # Latency metrics
+            "mic_to_transcript_ms", "transcript_to_llm_ms", "llm_to_tts_start_ms",
+            "tts_synthesis_ms", "end_to_end_latency_ms",
+            # TTS quality metrics
+            "tts_wav_path", "tts_sample_rate", "tts_duration_ms", "tts_file_size_bytes",
+            # WER and quality metrics (to be filled manually or by evaluation scripts)
+            "reference_transcript", "wer_score", "mos_score", "clarity_score", "expressiveness_score",
+            # Additional context
+            "room_name", "user_id", "error_occurred", "error_message"
+        ]
+
+        # Initialize session tracking
+        self.session_id = datetime.now().strftime("%Y%m%d_%H%M%S")
+        self.interaction_counter = 0
+        self.reference_transcripts = {}  # For WER calculation
+
+        if not os.path.exists(self.metrics_file_path):
+            with open(self.metrics_file_path, 'w', newline='', encoding='utf-8') as f:
+                writer = csv.DictWriter(f, fieldnames=self.csv_fieldnames)
+                writer.writeheader()
+
+        # Initialize fallback logger
+        self.logger = logger
+        self._initialize_session_logging()
+
+    def calculate_wer(self, reference: str, hypothesis: str) -> float:
+        """Calculate Word Error Rate between reference and hypothesis transcripts"""
+        if not reference or not hypothesis:
+            return 0.0
+
+        # Normalize text (lowercase, remove punctuation, split into words)
+        ref_words = re.sub(r'[^\w\s]', '', reference.lower()).split()
+        hyp_words = re.sub(r'[^\w\s]', '', hypothesis.lower()).split()
+
+        if len(ref_words) == 0:
+            return 0.0 if len(hyp_words) == 0 else 1.0
+
+        # Use difflib to calculate edit distance
+        matcher = difflib.SequenceMatcher(None, ref_words, hyp_words)
+        operations = matcher.get_opcodes()
+
+        substitutions = deletions = insertions = 0
+        for op, i1, i2, j1, j2 in operations:
+            if op == 'replace':
+                substitutions += max(i2 - i1, j2 - j1)
+            elif op == 'delete':
+                deletions += i2 - i1
+            elif op == 'insert':
+                insertions += j2 - j1
+
+        wer = (substitutions + deletions + insertions) / len(ref_words)
+        return min(wer, 1.0)  # Cap at 1.0
+
+    def _write_comprehensive_metrics(self, metrics_data: dict):
+        """Write comprehensive metrics to CSV with all timing and quality data"""
+        self.interaction_counter += 1
+
+        # Calculate WER if reference transcript is available
+        wer_score = None
+        if metrics_data.get("reference_transcript") and metrics_data.get("user_transcript"):
+            wer_score = self.calculate_wer(
+                metrics_data["reference_transcript"],
+                metrics_data["user_transcript"]
             )
 
-            # Initialize comprehensive metrics logging
-            self.metrics_file_path = os.path.join(os.path.dirname(__file__), "voice_agent_metrics.csv")
-            self.csv_fieldnames = [
-                "session_id", "timestamp", "interaction_id",
-                # Transcript metrics
-                "user_transcript", "transcript_confidence", "transcript_duration_ms",
-                # Agent response metrics
-                "agent_response", "response_length_chars", "response_length_words",
-                # Latency metrics
-                "mic_to_transcript_ms", "transcript_to_llm_ms", "llm_to_tts_start_ms",
-                "tts_synthesis_ms", "end_to_end_latency_ms",
-                # TTS quality metrics
-                "tts_wav_path", "tts_sample_rate", "tts_duration_ms", "tts_file_size_bytes",
-                # WER and quality metrics (to be filled manually or by evaluation scripts)
-                "reference_transcript", "wer_score", "mos_score", "clarity_score", "expressiveness_score",
-                # Additional context
-                "room_name", "user_id", "error_occurred", "error_message"
-            ]
+        row = {
+            "session_id": self.session_id,
+            "timestamp": datetime.now().isoformat(),
+            "interaction_id": f"{self.session_id}_{self.interaction_counter:04d}",
+            "config_mode": self.config_mode,
 
-            # Initialize session tracking
-            self.session_id = datetime.now().strftime("%Y%m%d_%H%M%S")
-            self.interaction_counter = 0
-            self.reference_transcripts = {}  # For WER calculation
+            # Transcript metrics
+            "user_transcript": metrics_data.get("user_transcript", ""),
+            "transcript_confidence": metrics_data.get("transcript_confidence", ""),
+            "transcript_duration_ms": metrics_data.get("transcript_duration_ms", ""),
 
-            if not os.path.exists(self.metrics_file_path):
-                with open(self.metrics_file_path, 'w', newline='', encoding='utf-8') as f:
-                    writer = csv.DictWriter(f, fieldnames=self.csv_fieldnames)
-                    writer.writeheader()
+            # Agent response metrics
+            "agent_response": metrics_data.get("agent_response", ""),
+            "response_length_chars": len(metrics_data.get("agent_response", "")),
+            "response_length_words": len(metrics_data.get("agent_response", "").split()),
 
-            # Initialize fallback logger
-            self.logger = logger
-            self._initialize_session_logging()
+            # Latency metrics
+            "mic_to_transcript_ms": f"{metrics_data.get('mic_to_transcript_ms', ''):.2f}" if metrics_data.get('mic_to_transcript_ms') else "",
+            "transcript_to_llm_ms": f"{metrics_data.get('transcript_to_llm_ms', ''):.2f}" if metrics_data.get('transcript_to_llm_ms') else "",
+            "llm_to_tts_start_ms": f"{metrics_data.get('llm_to_tts_start_ms', ''):.2f}" if metrics_data.get('llm_to_tts_start_ms') else "",
+            "tts_synthesis_ms": f"{metrics_data.get('tts_synthesis_ms', ''):.2f}" if metrics_data.get('tts_synthesis_ms') else "",
+            "end_to_end_latency_ms": f"{metrics_data.get('end_to_end_latency_ms', ''):.2f}" if metrics_data.get('end_to_end_latency_ms') else "",
 
-        def calculate_wer(self, reference: str, hypothesis: str) -> float:
-            """Calculate Word Error Rate between reference and hypothesis transcripts"""
-            if not reference or not hypothesis:
-                return 0.0
+            # TTS quality metrics
+            "tts_wav_path": metrics_data.get("tts_wav_path", ""),
+            "tts_sample_rate": metrics_data.get("tts_sample_rate", ""),
+            "tts_duration_ms": f"{metrics_data.get('tts_duration_ms', ''):.2f}" if metrics_data.get('tts_duration_ms') else "",
+            "tts_file_size_bytes": metrics_data.get("tts_file_size_bytes", ""),
 
-            # Normalize text (lowercase, remove punctuation, split into words)
-            ref_words = re.sub(r'[^\w\s]', '', reference.lower()).split()
-            hyp_words = re.sub(r'[^\w\s]', '', hypothesis.lower()).split()
+            # WER and quality metrics
+            "reference_transcript": metrics_data.get("reference_transcript", ""),
+            "wer_score": f"{wer_score:.4f}" if wer_score is not None else "",
+            "mos_score": metrics_data.get("mos_score", ""),  # To be filled manually
+            "clarity_score": metrics_data.get("clarity_score", ""),  # To be filled manually
+            "expressiveness_score": metrics_data.get("expressiveness_score", ""),  # To be filled manually
 
-            if len(ref_words) == 0:
-                return 0.0 if len(hyp_words) == 0 else 1.0
+            # Additional context
+            "room_name": getattr(self, "room_name", ""),
+            "user_id": metrics_data.get("user_id", ""),
+            "error_occurred": metrics_data.get("error_occurred", False),
+            "error_message": metrics_data.get("error_message", "")
+        }
 
-            # Use difflib to calculate edit distance
-            matcher = difflib.SequenceMatcher(None, ref_words, hyp_words)
-            operations = matcher.get_opcodes()
+        with open(self.metrics_file_path, 'a', newline='', encoding='utf-8') as f:
+            writer = csv.DictWriter(f, fieldnames=self.csv_fieldnames)
+            writer.writerow(row)
 
-            substitutions = deletions = insertions = 0
-            for op, i1, i2, j1, j2 in operations:
-                if op == 'replace':
-                    substitutions += max(i2 - i1, j2 - j1)
-                elif op == 'delete':
-                    deletions += i2 - i1
-                elif op == 'insert':
-                    insertions += j2 - j1
-
-            wer = (substitutions + deletions + insertions) / len(ref_words)
-            return min(wer, 1.0)  # Cap at 1.0
-
-        def _write_comprehensive_metrics(self, metrics_data: dict):
-            """Write comprehensive metrics to CSV with all timing and quality data"""
-            self.interaction_counter += 1
-
-            # Calculate WER if reference transcript is available
-            wer_score = None
-            if metrics_data.get("reference_transcript") and metrics_data.get("user_transcript"):
-                wer_score = self.calculate_wer(
-                    metrics_data["reference_transcript"],
-                    metrics_data["user_transcript"]
-                )
-
-            row = {
-                "session_id": self.session_id,
-                "timestamp": datetime.now().isoformat(),
-                "interaction_id": f"{self.session_id}_{self.interaction_counter:04d}",
-
-                # Transcript metrics
-                "user_transcript": metrics_data.get("user_transcript", ""),
-                "transcript_confidence": metrics_data.get("transcript_confidence", ""),
-                "transcript_duration_ms": metrics_data.get("transcript_duration_ms", ""),
-
-                # Agent response metrics
-                "agent_response": metrics_data.get("agent_response", ""),
-                "response_length_chars": len(metrics_data.get("agent_response", "")),
-                "response_length_words": len(metrics_data.get("agent_response", "").split()),
-
-                # Latency metrics
-                "mic_to_transcript_ms": f"{metrics_data.get('mic_to_transcript_ms', ''):.2f}" if metrics_data.get('mic_to_transcript_ms') else "",
-                "transcript_to_llm_ms": f"{metrics_data.get('transcript_to_llm_ms', ''):.2f}" if metrics_data.get('transcript_to_llm_ms') else "",
-                "llm_to_tts_start_ms": f"{metrics_data.get('llm_to_tts_start_ms', ''):.2f}" if metrics_data.get('llm_to_tts_start_ms') else "",
-                "tts_synthesis_ms": f"{metrics_data.get('tts_synthesis_ms', ''):.2f}" if metrics_data.get('tts_synthesis_ms') else "",
-                "end_to_end_latency_ms": f"{metrics_data.get('end_to_end_latency_ms', ''):.2f}" if metrics_data.get('end_to_end_latency_ms') else "",
-
-                # TTS quality metrics
-                "tts_wav_path": metrics_data.get("tts_wav_path", ""),
-                "tts_sample_rate": metrics_data.get("tts_sample_rate", ""),
-                "tts_duration_ms": f"{metrics_data.get('tts_duration_ms', ''):.2f}" if metrics_data.get('tts_duration_ms') else "",
-                "tts_file_size_bytes": metrics_data.get("tts_file_size_bytes", ""),
-
-                # WER and quality metrics
-                "reference_transcript": metrics_data.get("reference_transcript", ""),
-                "wer_score": f"{wer_score:.4f}" if wer_score is not None else "",
-                "mos_score": metrics_data.get("mos_score", ""),  # To be filled manually
-                "clarity_score": metrics_data.get("clarity_score", ""),  # To be filled manually
-                "expressiveness_score": metrics_data.get("expressiveness_score", ""),  # To be filled manually
-
-                # Additional context
-                "room_name": getattr(self, "room_name", ""),
-                "user_id": metrics_data.get("user_id", ""),
-                "error_occurred": metrics_data.get("error_occurred", False),
-                "error_message": metrics_data.get("error_message", "")
-            }
-
-            with open(self.metrics_file_path, 'a', newline='', encoding='utf-8') as f:
-                writer = csv.DictWriter(f, fieldnames=self.csv_fieldnames)
-                writer.writerow(row)
-
-            self.logger.info(f"[METRICS] Comprehensive metrics logged for interaction {self.interaction_counter}")
-            self.logger.info(f"[METRICS] End-to-end latency: {metrics_data.get('end_to_end_latency_ms', 'N/A')} ms")
-            if wer_score is not None:
-                self.logger.info(f"[METRICS] WER Score: {wer_score:.4f}")
+        self.logger.info(f"[METRICS] Comprehensive metrics logged for interaction {self.interaction_counter}")
+        self.logger.info(f"[METRICS] End-to-end latency: {metrics_data.get('end_to_end_latency_ms', 'N/A')} ms")
+        if wer_score is not None:
+            self.logger.info(f"[METRICS] WER Score: {wer_score:.4f}")
 
         # Legacy method for backward compatibility
         def _write_metrics_row(self, latency_ms, filename, text):
@@ -663,77 +768,85 @@ async def entrypoint(ctx: JobContext):
 
 
 
-    # Create ultra slow, very human-like agent instance
-    total_delay = (AGENT_CONFIG['natural_response_delay'] +
-                   AGENT_CONFIG['thinking_pause'] +
-                   AGENT_CONFIG['contemplation_pause'] +
-                   AGENT_CONFIG['llm_processing_delay'] +
-                   AGENT_CONFIG['tts_processing_delay'] +
-                   AGENT_CONFIG['final_pause'])
+async def entrypoint(ctx: JobContext):
+    """
+    Main entrypoint for the voice optimization agent.
+    Creates agent with configurable optimization modes.
+    """
+    await ctx.connect()
 
-    logger.info(f"[ULTRA_SLOW_CONFIG] Creating ultra slow, very human-like voice agent with:")
-    logger.info(f"[ULTRA_SLOW_CONFIG] - ALL OPTIMIZATIONS COMPLETELY DISABLED")
-    logger.info(f"[ULTRA_SLOW_CONFIG] - Streaming STT: {AGENT_CONFIG['enable_streaming_stt']} (DISABLED)")
-    logger.info(f"[ULTRA_SLOW_CONFIG] - Partial LLM: {AGENT_CONFIG['enable_partial_llm']} (DISABLED)")
-    logger.info(f"[ULTRA_SLOW_CONFIG] - SSML Enhancement: {AGENT_CONFIG['enable_ssml']} (DISABLED)")
-    logger.info(f"[ULTRA_SLOW_CONFIG] - Turn Detector Threshold: {AGENT_CONFIG['turn_detector_threshold']} (ULTRA INSENSITIVE)")
-    logger.info(f"[ULTRA_SLOW_CONFIG] - Initial Response Delay: {AGENT_CONFIG['natural_response_delay']}s (was 4.0s)")
-    logger.info(f"[ULTRA_SLOW_CONFIG] - Thinking Pause: {AGENT_CONFIG['thinking_pause']}s (was 2.0s)")
-    logger.info(f"[ULTRA_SLOW_CONFIG] - Contemplation Pause: {AGENT_CONFIG['contemplation_pause']}s (NEW)")
-    logger.info(f"[ULTRA_SLOW_CONFIG] - LLM Processing Delay: {AGENT_CONFIG['llm_processing_delay']}s (was 2.0s)")
-    logger.info(f"[ULTRA_SLOW_CONFIG] - TTS Processing Delay: {AGENT_CONFIG['tts_processing_delay']}s (was 3.0s)")
-    logger.info(f"[ULTRA_SLOW_CONFIG] - Final Pause: {AGENT_CONFIG['final_pause']}s (was 1.0s)")
-    logger.info(f"[ULTRA_SLOW_CONFIG] - TTS Speaking Speed: {AGENT_CONFIG['tts_speed']} (was 1.0 - much slower speech)")
-    logger.info(f"[ULTRA_SLOW_CONFIG] - TOTAL DELAY: ~{total_delay}s (was ~12s)")
-    logger.info(f"[ULTRA_SLOW_CONFIG] - Expected response time: {total_delay + 3}s - {total_delay + 7}s")
-    agent = MyAgent()
+    # Create agent with current configuration mode
+    config = AGENT_CONFIG
+    agent = VoiceOptimizationAgent(config_mode=CURRENT_MODE)
 
-    # Optimized session configuration
-    session = AgentSession(
-        # Natural turn detection (less aggressive for more natural conversation)
-        turn_detection=MultilingualModel(
-            unlikely_threshold=AGENT_CONFIG["turn_detector_threshold"],  # 0.2 for more natural pauses
-            # Note: silence_duration, prefix_padding, suffix_padding not supported in this version
-        ),
+    logger.info(f"[CONFIG] Creating voice agent with mode: {CURRENT_MODE}")
+    logger.info(f"[CONFIG] Mode description: {config['description']}")
+    logger.info(f"[CONFIG] Streaming STT: {config.get('enable_streaming_stt', False)}")
+    logger.info(f"[CONFIG] Partial LLM: {config.get('enable_partial_llm', False)}")
+    logger.info(f"[CONFIG] SSML Enhancement: {config.get('enable_ssml', False)}")
+    logger.info(f"[CONFIG] Turn Detection: {config.get('turn_detection_mode', 'vad')}")
+    logger.info(f"[CONFIG] TTS Speed: {config.get('tts_speed', 1.0)}")
 
-        # Optimized VAD
-        vad=silero.VAD.load(),
+    # Calculate total artificial delays for human-like mode
+    if CURRENT_MODE == "human_like":
+        total_delay = (config.get('natural_response_delay', 0) +
+                      config.get('thinking_pause', 0) +
+                      config.get('contemplation_pause', 0) +
+                      config.get('llm_processing_delay', 0) +
+                      config.get('tts_processing_delay', 0) +
+                      config.get('final_pause', 0))
+        logger.info(f"[CONFIG] Total artificial delays: {total_delay}s")
 
-        # Natural-paced STT (Deepgram) - No streaming for slower processing
-        stt=deepgram.STT(
-            model=AGENT_CONFIG["stt_model"],
-            language=AGENT_CONFIG["stt_language"],
-            interim_results=AGENT_CONFIG["stt_interim_results"],  # Will be False for natural timing
-            # Note: smart_format, punctuate, diarize not supported in this STT constructor
-        ),
+    # Create session configuration based on optimization mode
+    session_config = {}
 
-        # Slow speaking TTS (Cartesia)
-        tts=cartesia.TTS(
-            model=AGENT_CONFIG["tts_model"],
-            voice=AGENT_CONFIG["tts_voice"],
-            encoding=AGENT_CONFIG["tts_encoding"],
-            sample_rate=AGENT_CONFIG["tts_sample_rate"],
-            speed=AGENT_CONFIG["tts_speed"],  # 0.6 for slow, natural speech
-        ),
+    # Configure turn detection based on mode
+    if config.get("turn_detection_mode") == "multilingual_model" and config.get("enable_turn_detector_plugin"):
+        session_config["turn_detection"] = MultilingualModel()
+    elif config.get("turn_detection_mode") == "stt":
+        session_config["turn_detection"] = "stt"
+    else:
+        session_config["turn_detection"] = "vad"  # Default VAD mode
+
+    # Configure VAD
+    session_config["vad"] = silero.VAD.load()
+
+    # Configure STT (Deepgram)
+    session_config["stt"] = deepgram.STT(
+        model=config["stt_model"],
+        language=config["stt_language"],
+        interim_results=config.get("stt_interim_results", False),
     )
+
+    # Configure TTS (Cartesia)
+    session_config["tts"] = cartesia.TTS(
+        model=config["tts_model"],
+        voice=config["tts_voice"],
+        encoding=config["tts_encoding"],
+        sample_rate=config["tts_sample_rate"],
+        speed=config.get("tts_speed", 1.0),
+    )
+
+    # Configure endpointing delays
+    session_config["min_endpointing_delay"] = config.get("min_endpointing_delay", 0.5)
+    session_config["max_endpointing_delay"] = config.get("max_endpointing_delay", 6.0)
+    session_config["allow_interruptions"] = config.get("allow_interruptions", True)
+
+    # Create the session
+    session = AgentSession(**session_config)
 
     # Store session reference in agent for metrics logging
     agent._session_ref = session
     agent.logger = logger  # Use module logger
     agent.room_name = ctx.room.name
 
-    # Register event handlers on the session
-    @session.on("user_input_transcribed")
-    def on_user_input_transcribed(event: events.UserInputTranscribedEvent):
-        agent._on_user_input_transcribed(event)
-
+    # Start the session
     await session.start(
         agent=agent,
         room=ctx.room,
         room_input_options=RoomInputOptions(),
         room_output_options=RoomOutputOptions(transcription_enabled=True),
     )
-    await ctx.connect()
 
 
 
