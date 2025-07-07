@@ -1,0 +1,22 @@
+# Python virtual environment
+.venv/
+
+# Secrets and credentials
+*.env
+token.txt
+
+# Generated media and reports
+tts_outputs/
+*.csv
+*.pdf
+*.html
+*.json
+*.wav
+*.ogg
+
+# Python cache
+__pycache__/
+*.pyc
+
+# IDE configuration
+.vscode/
