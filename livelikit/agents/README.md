@@ -1,27 +1,5 @@
 
-Conversation opened. 2 messages. 1 message unread.
 
-Skip to content
-Using Gmail with screen readers
-1 of 20,125
-code
-Inbox
-
-Abdul Samad a
-11:20 PM (27 minutes ago)
-samora_Assignement.zip
-
-Abdul Samad a <samad.ali.hulikunte@gmail.com>
-Attachments
-11:23 PM (23 minutes ago)
-to me
-
-hi
-
-On Mon, Jul 7, 2025 at 11:20 PM Abdul Samad a <samad.ali.hulikunte@gmail.com> wrote:
- samora_Assignement.zip
- 2 Attachments
-  •  Scanned by Gmail
 # 🎤 LiveKit Voice Agent - Healthcare Assistant
 
 A comprehensive, optimized voice agent implementation using LiveKit with advanced features including streaming STT, SSML-enhanced TTS, intelligent turn detection, and comprehensive performance monitoring.
